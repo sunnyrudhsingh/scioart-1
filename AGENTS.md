@@ -19,7 +19,7 @@ This file (AGENTS.md) is read automatically by Codex and, through CLAUDE.md, by 
 
 ## How a change reaches scioart.co.in
 
-Hosting is Vercel (project `scioart-1`, connected to GitHub `sunnyrudhsingh/scioart-1`). Every push to `main` goes live on scioart.co.in within a few minutes, so:
+Hosting is Vercel (project `scioart-1`, connected to GitHub `sunnyrudhsingh/scioart-1`). Mahir Singh (GitHub `mahirsinghh`) manages the Vercel account, the domain settings and any environment variables; Sunnyrudh works through Codex and GitHub and does not use the Vercel dashboard. When a task needs a Vercel or DNS setting changed, say so and tell Sunnyrudh it is a job for Mahir. Every push to `main` goes live on scioart.co.in within a few minutes, so:
 
 1. Never push directly to `main`. Make each change on a new branch and open a pull request with a short, plain description of what changed.
 2. Vercel builds the branch and adds a preview link to the pull request. Give Sunnyrudh that link. Content changes are shown to his advisor there.
@@ -39,7 +39,7 @@ Hosting is Vercel (project `scioart-1`, connected to GitHub `sunnyrudhsingh/scio
 - Full site built: 36 crops, 10 core operations each (allied occupations have their own), editions 2023–2026 with archive, 11 topics, crop calendar with .ics export, Learn & Play (10 sample items), 3 sample wheat extension kits with ZIP download, advisories with urgent banner, resources and glossary, bilingual search, Ask an Expert, audience pages, district picker, dark mode, offline support, sitemap, hreflang, share images.
 - **All agricultural content is SAMPLE.** Only wheat has (sample) operation guides, in `content/guides/wheat.ts`; it is the template for every other crop.
 - Not yet done (owner's to-do list):
-  - Connect scioart.co.in to Vercel (GoDaddy DNS); set env vars when needed (see `.env.example`). The site is already deployed at scioart-1.vercel.app.
+  - Connect scioart.co.in to Vercel (GoDaddy DNS, done by Mahir); set env vars when needed (see `.env.example`). The site is already deployed at scioart-1.vercel.app.
   - Run `supabase/schema.sql` for Ask an Expert (otherwise demo mode, nothing stored)
   - Real Package of Practices text, crop by crop, reviewed and published
   - Real kit PDFs, audio and game files in place of `public/samples/`

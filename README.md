@@ -76,6 +76,18 @@ Copy `.env.example` to `.env.local` for local work. All are optional; the site w
 
 Without the Supabase variables, the Ask an Expert form runs in demo mode: it validates and shows the success screen but stores nothing.
 
+## Making changes with Codex (or Claude Code)
+
+Both assistants read `AGENTS.md`, which holds the project rules and the owner's working instructions.
+
+1. At chatgpt.com/codex, connect GitHub and choose `sunnyrudhsingh/scioart-1`. In the environment's setup script, put `npm ci`.
+2. Describe the change in plain words, for example "Add this official wheat sowing text as a draft guide", and paste the official text.
+3. Codex makes the change on a new branch and opens a pull request. Vercel adds a preview link to it within a few minutes.
+4. Open the preview link on your phone, in Punjabi and English. Content changes go to the reviewer first.
+5. When it is approved, merge the pull request on GitHub (**Merge pull request** → **Confirm merge**). scioart.co.in updates within a few minutes.
+
+If the build fails, nothing changes on the live site. Ask Codex to read the error on the pull request and fix it.
+
 ## Supabase (Ask an Expert)
 
 1. Create a free project at supabase.com (region: Mumbai).

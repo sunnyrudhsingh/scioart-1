@@ -34,3 +34,15 @@ export function todayISO(): string {
   const pad = (x: number) => String(x).padStart(2, "0");
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
+
+/** Format a live program's start time in India time, e.g. "5 December 2026, 11:00 am". */
+export function formatDateTime(iso: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-IN" : "pa-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "Asia/Kolkata",
+  }).format(new Date(iso));
+}

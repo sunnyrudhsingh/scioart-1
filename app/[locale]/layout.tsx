@@ -9,11 +9,10 @@ import { clientMessages, type Messages } from "@/messages";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { BottomNav } from "@/components/layout/BottomNav";
-import { RegionProvider } from "@/components/layout/RegionProvider";
 import { themeScript } from "@/components/layout/ThemeToggle";
-import { AdvisoryBanner } from "@/components/content/AdvisoryBanner";
 import { PwaProvider } from "@/components/layout/PwaProvider";
-import { getAdvisories, getLocations } from "@/lib/content";
+import { getCategories } from "@/lib/content";
+import { tx } from "@/lib/text";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -58,7 +57,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
   const messages = (await getMessages()) as Messages;
   const tc = await getTranslations("common");
-  const urgent = getAdvisories().filter((a) => a.urgent);
+  const sections = getCategories().map((c) => ({ href: `/${c.id}`, label: tx(c.name, locale) }));
 
   return (
     <html lang={locale} className={fontVariables} suppressHydrationWarning>
@@ -74,15 +73,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         </a>
         <NextIntlClientProvider messages={clientMessages(messages)}>
           <PwaProvider>
-            <RegionProvider locations={getLocations()}>
-              <AdvisoryBanner advisories={urgent} />
-              <Header />
-              <main id="main" tabIndex={-1} className="outline-none">
-                {children}
-              </main>
-              <Footer />
-              <BottomNav />
-            </RegionProvider>
+            <Header sections={sections} />
+            <main id="main" tabIndex={-1} className="outline-none">
+              {children}
+            </main>
+            <Footer />
+            <BottomNav sections={sections} />
           </PwaProvider>
         </NextIntlClientProvider>
       </body>

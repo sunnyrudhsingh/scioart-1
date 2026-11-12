@@ -4,15 +4,14 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Play } from "lucide-react";
 import { cn } from "@/lib/cn";
-
-const isRealId = (id: string) => /^[A-Za-z0-9_-]{11}$/.test(id) && !id.startsWith("SAMPLE");
+import { isRealYouTubeId as isRealId, youTubeThumb } from "@/lib/media";
 
 /**
  * A YouTube "facade": shows a light preview and only loads the heavy
  * player after a tap. Placeholder IDs show a clear message instead.
  */
 export function LiteYouTube({ id, title, className }: { id: string; title: string; className?: string }) {
-  const t = useTranslations("learn");
+  const t = useTranslations("player");
   const [open, setOpen] = useState(false);
   const real = isRealId(id);
 
@@ -35,12 +34,7 @@ export function LiteYouTube({ id, title, className }: { id: string; title: strin
         >
           {real ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
-              alt=""
-              loading="lazy"
-              className="absolute inset-0 size-full object-cover opacity-80"
-            />
+            <img src={youTubeThumb(id)} alt="" loading="lazy" className="absolute inset-0 size-full object-cover opacity-80" />
           ) : (
             <span
               aria-hidden="true"

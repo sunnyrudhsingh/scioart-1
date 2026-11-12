@@ -2,29 +2,37 @@
 
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { CalendarDays, Gamepad2, House, LayoutGrid, Wheat } from "lucide-react";
+import { House, LayoutGrid, Library, Radio, Wheat } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
-import { isActive, mobileMoreNav } from "@/lib/nav";
+import { isActive, type SectionLink } from "@/lib/nav";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { ThemeToggle } from "./ThemeToggle";
-import { RegionChip } from "./RegionChip";
 import { cn } from "@/lib/cn";
 
 const items = [
   { href: "/", key: "home", Icon: House },
+  { href: "/library", key: "library", Icon: Library },
+  { href: "/live", key: "live", Icon: Radio },
   { href: "/crops", key: "crops", Icon: Wheat },
-  { href: "/calendar", key: "calendarShort", Icon: CalendarDays },
-  { href: "/learn", key: "learnShort", Icon: Gamepad2 },
 ] as const;
 
-export function BottomNav() {
+const moreLinks = [
+  { href: "/topics", key: "topics" },
+  { href: "/resources", key: "resources" },
+  { href: "/about", key: "about" },
+  { href: "/search", key: "search" },
+] as const;
+
+export function BottomNav({ sections }: { sections: SectionLink[] }) {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
   const pathname = usePathname();
   const sheet = useRef<HTMLDialogElement>(null);
 
-  const activeIndex = items.findIndex((i) => isActive(pathname, i.href));
-  const moreActive = activeIndex === -1 && mobileMoreNav.some((i) => isActive(pathname, i.href));
+  // A library section's page (e.g. /jingles) counts as being in the Library.
+  const inSection = sections.some((s) => s.href !== "/live" && isActive(pathname, s.href));
+  const activeIndex = items.findIndex((i) => isActive(pathname, i.href) || (i.href === "/library" && inSection));
+  const moreActive = activeIndex === -1 && moreLinks.some((i) => isActive(pathname, i.href));
   const index = activeIndex === -1 ? (moreActive ? 4 : -1) : activeIndex;
 
   useEffect(() => {
@@ -49,8 +57,8 @@ export function BottomNav() {
               <span className="block h-full rounded-full bg-accent-soft" />
             </span>
           )}
-          {items.map(({ href, key, Icon }) => {
-            const active = isActive(pathname, href);
+          {items.map(({ href, key, Icon }, i) => {
+            const active = i === activeIndex;
             return (
               <li key={href} className="relative">
                 <Link
@@ -98,12 +106,25 @@ export function BottomNav() {
             {t("moreTitle")}
           </h2>
           <ul className="grid grid-cols-2 gap-2">
-            {mobileMoreNav.map((item) => (
+            {sections.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActive(pathname, item.href) ? "page" : undefined}
-                  className="flex min-h-14 items-center rounded-2xl bg-surface-2 px-4 leading-snug font-semibold aria-[current=page]:bg-accent-soft aria-[current=page]:text-primary"
+                  className="flex min-h-12 items-center rounded-2xl bg-surface-2 px-4 leading-snug font-semibold aria-[current=page]:bg-accent-soft aria-[current=page]:text-primary"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-4 grid grid-cols-2 gap-2">
+            {moreLinks.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                  className="flex min-h-12 items-center rounded-2xl border border-line px-4 leading-snug font-semibold aria-[current=page]:bg-accent-soft aria-[current=page]:text-primary"
                 >
                   {t(item.key)}
                 </Link>
@@ -112,7 +133,6 @@ export function BottomNav() {
           </ul>
           <h3 className="t-label mt-6 mb-2">{t("settings")}</h3>
           <div className="flex flex-wrap items-center gap-2">
-            <RegionChip />
             <LanguageSwitch />
             <ThemeToggle />
           </div>

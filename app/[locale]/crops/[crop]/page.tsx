@@ -1,4 +1,4 @@
-import { Suspense, ViewTransition } from "react";
+import { ViewTransition } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -9,25 +9,9 @@ import { PageShell } from "@/components/motion/PageShell";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { CropIcon } from "@/components/illustrations/CropIcon";
-import { OperationIcon, TopicIcon } from "@/components/illustrations/FieldIcons";
-import { CropEditionView } from "@/components/content/CropEditionView";
-import { LearnCard } from "@/components/content/LearnCard";
-import { KitCard } from "@/components/content/KitCard";
-import { SourceBox } from "@/components/content/SourceBox";
-import { SampleBanner } from "@/components/content/SampleBanner";
-import {
-  getCrop,
-  getCropEditions,
-  getCropGroups,
-  getCrops,
-  getGuidesForCrop,
-  getKits,
-  getLearnItems,
-  getOperations,
-  getPublication,
-  getSeason,
-  getTopic,
-} from "@/lib/content";
+import { TopicIcon } from "@/components/illustrations/FieldIcons";
+import { MaterialCard } from "@/components/content/MaterialCard";
+import { getCrop, getCropGroups, getCrops, getMaterials, getSeason, getTopic } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 import { pageLocale } from "@/lib/page";
 import { tx, txOther } from "@/lib/text";
@@ -47,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/crops/[c
     locale,
     path: `/crops/${slug}`,
     title: tx(crop.name, locale),
-    description: `${tx(crop.description, locale)} ${t("operationsLead")}`,
+    description: `${tx(crop.description, locale)} ${t("materialsLead")}`,
     og: `crop:${slug}`,
   });
 }
@@ -59,17 +43,9 @@ export default async function CropPage({ params }: PageProps<"/[locale]/crops/[c
   if (!crop) notFound();
 
   const t = await getTranslations("crops");
-  const tc = await getTranslations("common");
   const season = getSeason(crop.season);
   const group = getCropGroups().find((g) => g.id === crop.group);
-  const publication = getPublication(crop.publication)!;
-  const editions = getCropEditions(slug);
-  const latestGuides = getGuidesForCrop(slug);
-  const ops = getOperations(slug);
-  const editionGuides = Object.fromEntries(editions.map((e) => [e.id, getGuidesForCrop(slug, e.id).map((g) => g.operation)]));
-  const latest = editions.find((e) => e.isLatest);
-  const learn = getLearnItems({ crop: slug });
-  const kits = getKits({ crop: slug });
+  const items = getMaterials({ crop: slug });
   const topics = crop.topics.map((s) => getTopic(s)).filter((x) => !!x);
 
   return (
@@ -92,23 +68,6 @@ export default async function CropPage({ params }: PageProps<"/[locale]/crops/[c
                 {txOther(crop.name, locale)}
               </p>
               <p className="t-lead mt-5 max-w-xl">{tx(crop.description, locale)}</p>
-
-              <section aria-labelledby="facts" className="mt-8 rounded-[var(--radius-card)] bg-surface p-5 ring-1 ring-line">
-                <div className="flex items-center justify-between gap-3">
-                  <h2 id="facts" className="font-bold">
-                    {t("quickFacts")}
-                  </h2>
-                  <span className="sample-badge">{tc("sample")}</span>
-                </div>
-                <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3">
-                  {crop.quickFacts.map((f, i) => (
-                    <div key={i}>
-                      <dt className="t-small text-muted">{tx(f.label, locale)}</dt>
-                      <dd className="font-semibold">{tx(f.value, locale)}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </section>
             </div>
             <ViewTransition name={`crop-art-${crop.slug}`} share="morph" default="none">
               <div className="order-1 md:order-2">
@@ -125,31 +84,23 @@ export default async function CropPage({ params }: PageProps<"/[locale]/crops/[c
             </ViewTransition>
           </header>
 
-          {latestGuides.some((g) => g.sample) && <SampleBanner />}
-
-          {/* Operations */}
-          <section aria-labelledby="ops-title" className="py-8">
-            <Suspense
-              fallback={
-                <h2 id="ops-title" className="t-h2">
-                  {t("operationsTitle")}
-                </h2>
-              }
-            >
-              <CropEditionView
-                crop={crop.slug}
-                editions={editions.map((e) => ({ id: e.id, label: e.label, isLatest: e.isLatest }))}
-                ops={ops.map((o) => ({
-                  slug: o.slug,
-                  name: o.name,
-                  short: o.short,
-                  readyIn: Object.entries(editionGuides)
-                    .filter(([, list]) => list.includes(o.slug))
-                    .map(([id]) => id),
-                }))}
-                icons={Object.fromEntries(ops.map((o) => [o.slug, <OperationIcon key={o.slug} name={o.icon} className="size-9" />]))}
-              />
-            </Suspense>
+          {/* Materials about this crop */}
+          <section aria-labelledby="materials-title" className="py-8">
+            <h2 id="materials-title" className="t-h2 mb-2">
+              {t("materialsTitle")}
+            </h2>
+            <p className="mb-6 text-muted">{t("materialsLead")}</p>
+            {items.length === 0 ? (
+              <p className="rounded-2xl bg-surface-2 p-6 text-lg">{t("noMaterials")}</p>
+            ) : (
+              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((item, i) => (
+                  <li key={item.slug}>
+                    <MaterialCard item={item} locale={locale} index={i} />
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
 
           {/* Related topics */}
@@ -173,47 +124,6 @@ export default async function CropPage({ params }: PageProps<"/[locale]/crops/[c
               </ul>
             </section>
           )}
-
-          {learn.length > 0 && (
-            <section aria-labelledby="rel-learn" className="py-8">
-              <h2 id="rel-learn" className="t-h3 mb-4">
-                {t("relatedLearn")}
-              </h2>
-              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {learn.slice(0, 6).map((item, i) => (
-                  <li key={item.slug}>
-                    <LearnCard item={item} locale={locale} index={i} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          {kits.length > 0 && (
-            <section aria-labelledby="rel-kits" className="py-8">
-              <h2 id="rel-kits" className="t-h3 mb-4">
-                {t("relatedKits")}
-              </h2>
-              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {kits.map((k, i) => (
-                  <li key={k.slug}>
-                    <KitCard kit={k} locale={locale} index={i} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-
-          <div className="py-8">
-            <SourceBox
-              locale={locale}
-              publication={publication.title}
-              publisher={publication.publisher}
-              edition={latest?.label}
-              lastReviewed={latestGuides[0]?.lastReviewed}
-              reviewer={latestGuides[0]?.reviewer}
-            />
-          </div>
         </div>
       </div>
     </PageShell>

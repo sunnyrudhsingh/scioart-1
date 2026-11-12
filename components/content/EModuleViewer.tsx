@@ -7,7 +7,7 @@ import { QuizPlayer } from "./QuizPlayer";
 
 /** A step-by-step lesson with a progress bar, followed by its quiz. */
 export function EModuleViewer({ lesson, quiz, title }: { lesson: { title: L; body: L }[]; quiz?: QuizQuestion[]; title: string }) {
-  const t = useTranslations("learn");
+  const t = useTranslations("player");
   const locale = useLocale();
   const L = (x: L) => (locale === "en" ? x.en : x.pa);
   const [step, setStep] = useState(0);

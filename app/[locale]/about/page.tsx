@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Mail, UserRound } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
-import { Link } from "@/i18n/navigation";
 import { PageShell } from "@/components/motion/PageShell";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHeader } from "@/components/ui/Section";
@@ -80,10 +79,10 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
 
         <section aria-labelledby="review" className="py-8">
           <h2 id="review" className="t-h2 mb-6">
-            {t("reviewTitle")}
+            {t("madeTitle")}
           </h2>
           <ol className="grid gap-4 md:grid-cols-4">
-            {(["review1", "review2", "review3", "review4"] as const).map((k, i) => (
+            {(["made1", "made2", "made3", "made4"] as const).map((k, i) => (
               <li key={k} data-reveal style={{ ["--i" as string]: i }} className="rounded-[var(--radius-card)] bg-surface-2 p-5">
                 <span className="grid size-9 place-items-center rounded-full bg-primary font-bold text-on-primary" lang="en">
                   {i + 1}
@@ -111,11 +110,6 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
             <Mail className="size-5" aria-hidden="true" />
             {CONTACT_EMAIL}
           </a>
-          <p className="mt-5">
-            <Link href="/ask" className="link font-semibold">
-              {t("contactAsk")}
-            </Link>
-          </p>
         </section>
       </div>
     </PageShell>

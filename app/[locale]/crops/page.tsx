@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHeader } from "@/components/ui/Section";
 import { CropCard } from "@/components/content/CropCard";
 import { CropsBrowser } from "@/components/content/CropsBrowser";
-import { getCropGroups, getCrops, getGuidesForCrop, getSeasons } from "@/lib/content";
+import { getCropGroups, getCrops, getMaterials, getSeasons } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 import { pageLocale } from "@/lib/page";
 import { tx } from "@/lib/text";
@@ -25,7 +25,14 @@ export default async function CropsPage({ params }: PageProps<"/[locale]/crops">
   const cards = Object.fromEntries(
     crops.map((c, i) => [
       c.slug,
-      <CropCard key={c.slug} crop={c} locale={locale} index={i} morph meta={t("readyCount", { count: getGuidesForCrop(c.slug).length })} />,
+      <CropCard
+        key={c.slug}
+        crop={c}
+        locale={locale}
+        index={i}
+        morph
+        meta={t("materialsCount", { count: getMaterials({ crop: c.slug }).length })}
+      />,
     ]),
   );
 

@@ -15,25 +15,26 @@ export async function Footer() {
     {
       title: t("explore"),
       links: [
+        { href: "/library", label: nav("library") },
+        { href: "/live", label: nav("live") },
         { href: "/crops", label: nav("crops") },
         { href: "/topics", label: nav("topics") },
-        { href: "/calendar", label: nav("calendar") },
-        { href: "/advisories", label: nav("advisories") },
       ],
     },
     {
       title: t("learn"),
       links: [
-        { href: "/learn", label: nav("learn") },
-        { href: "/extension", label: nav("extension") },
-        { href: "/resources", label: nav("resources") },
-        { href: "/ask", label: nav("ask") },
+        { href: "/documentaries", label: nav("watch") },
+        { href: "/scientific-songs", label: nav("listen") },
+        { href: "/games", label: nav("play") },
+        { href: "/e-books", label: nav("read") },
       ],
     },
     {
       title: t("info"),
       links: [
         { href: "/about", label: nav("about") },
+        { href: "/resources", label: nav("resources") },
         { href: "/privacy", label: nav("privacy") },
         { href: "/search", label: nav("search") },
       ],

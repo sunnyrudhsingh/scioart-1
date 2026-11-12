@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     locale === "en"
       ? "Science and art from Punjab's fields, in Punjabi and English"
       : orderGurmukhi("ਪੰਜਾਬ ਦੇ ਖੇਤਾਂ ਤੋਂ ਵਿਗਿਆਨ ਤੇ ਕਲਾ, ਪੰਜਾਬੀ ਅਤੇ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ");
-  const accent = kind.startsWith("crop") ? "#e0a526" : kind.startsWith("library") ? "#4fa36b" : "#f2c230";
+  const accent = kind.startsWith("crop") ? "#e0a526" : kind.startsWith("library") ? "#c2185b" : "#f5a623";
   const titleFont = locale === "en" ? "Fraunces" : "Mukta";
 
   return new ImageResponse(
@@ -71,7 +71,7 @@ export async function GET(req: Request) {
             width: 54,
             height: 54,
             borderRadius: 999,
-            border: "7px solid #1f5e3b",
+            border: "7px solid #6d1131",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

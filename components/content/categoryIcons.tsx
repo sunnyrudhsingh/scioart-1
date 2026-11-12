@@ -43,7 +43,7 @@ const soft: Record<Key, string> = {
   watch:
     "bg-[color-mix(in_oklab,var(--cat-watch)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-watch)_82%,var(--text))]",
   listen:
-    "bg-[color-mix(in_oklab,var(--cat-listen)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-listen)_82%,var(--text))]",
+    "bg-[color-mix(in_oklab,var(--cat-listen)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-listen)_68%,var(--text))]",
   play: "bg-[color-mix(in_oklab,var(--cat-play)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-play)_72%,var(--text))]",
   learn:
     "bg-[color-mix(in_oklab,var(--cat-learn)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-learn)_82%,var(--text))]",

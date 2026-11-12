@@ -19,8 +19,8 @@ const tab = await ctx.newPage();
 for (const [name, size, padding, bg] of [
   ["icon-192.png", 192, 0, "transparent"],
   ["icon-512.png", 512, 0, "transparent"],
-  ["icon-maskable-512.png", 512, 72, "#fbf7ef"],
-  ["apple-touch-icon.png", 180, 14, "#fbf7ef"],
+  ["icon-maskable-512.png", 512, 72, "#fff8ef"],
+  ["apple-touch-icon.png", 180, 14, "#fff8ef"],
 ]) {
   await tab.setViewportSize({ width: size, height: size });
   await tab.setContent(page(size, padding, bg));

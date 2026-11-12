@@ -60,6 +60,7 @@ Hosting is Vercel (project `scioart-1`, connected to GitHub `sunnyrudhsingh/scio
 ## Technical notes (this is Next.js 16, not what older docs describe)
 
 - Next.js 16 with Turbopack, React 19.3, TypeScript, Tailwind CSS v4 (CSS-first tokens in `app/globals.css`, dark mode via `[data-theme=dark]`, season colours via `data-season`).
+- Colours: the owner chose the **Phulkari** palette (maroon, gold, magenta) in November 2026. `PALETTE` in `lib/site.ts` sets `data-palette` on `<html>`; the palettes (`phulkari`, `truck`, `sarson`, each with a dark version) are in `app/globals.css`. Each kind of item has one colour (`--cat-watch`, `--cat-listen`, `--cat-play`, `--cat-learn`, `--cat-read`, `--cat-live`); use `categoryTint`/`categorySolid` from `components/content/categoryIcons.tsx`, not new hard-coded colours. The phulkari pattern is `components/illustrations/Phulkari.tsx`. Browser theme colour, app icons and the share image use the Phulkari colours directly; update them too if the palette ever changes.
 - next-intl 4: routes are `/pa/...` and `/en/...`; routing in `i18n/`; middleware is `proxy.ts` (Next 16 renamed middleware). Cast locales `as Locale` where needed.
 - Pages are statically generated (`generateStaticParams`, `dynamicParams = false`). After adding routes, run `npx next typegen` before `tsc`.
 - Page transitions: React `<ViewTransition>`; scroll reveals: CSS scroll-driven animations (`[data-reveal]`); hero motion starts after load (`components/motion/HeroParallax.tsx`). No Framer/Motion library.

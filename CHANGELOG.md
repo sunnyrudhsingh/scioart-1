@@ -12,6 +12,7 @@ SciOArt now shares materials only: it no longer gives farm advice or answers que
 - Live programs: "coming up", "live now" and "past programs" worked out on the visitor's clock, with a "Watch live on YouTube/Facebook" button and the recording afterwards; the next live program on the home page
 - New home page: "Science and art from Punjab's fields", section buttons, next live program, newest items, a showcase, browse by theme and by crop
 - New menus: Sections, Library, Live, Crops, Themes
+- New look: the Phulkari palette (maroon, gold, magenta) with an original phulkari embroidery pattern, one bold colour per kind of item, and new app icons
 
 ### Removed
 

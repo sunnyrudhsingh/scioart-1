@@ -10,7 +10,7 @@ import { Link } from "@/i18n/navigation";
 import type { SearchEntry } from "@/lib/search-index";
 import { KEYS, readStore, writeStore } from "@/lib/storage";
 
-const order: SearchEntry["type"][] = ["crop", "operation", "topic", "learn", "kit", "advisory", "resource", "glossary"];
+const order: SearchEntry["type"][] = ["material", "section", "crop", "topic", "resource", "glossary"];
 
 function highlight(text: string, matches: readonly FuseResultMatch[] | undefined, key: string) {
   const m = matches?.find((x) => x.key === key);

@@ -15,6 +15,13 @@ Put a file at the exact path listed below and redeploy. The site checks for the 
 - **People:** get the person's permission. For children, get a parent's permission.
 - **Rights:** use photos taken by PAU or the SciOArt team, or with written permission. Record the photographer for each file in the credits table below.
 
+## Item covers (wired now)
+
+Every library item can have a cover picture for its card, set as `media.cover` in `content/materials.ts` (see CONTENT_GUIDE.md). Without one, a film's card uses its YouTube still, and everything else shows its section's icon.
+
+- Path: `public/media/<section>/<slug>-cover.jpg`, e.g. `public/media/e-books/stories-from-the-fields-cover.jpg`
+- Size: 1600 × 900 (16:9), under 300 KB; keep text off the picture, the title is shown below it
+
 ## Crop photos (wired now)
 
 Shown at the top of each crop page (16:10 on phones, 5:4 on wide screens) and used when sharing the page. Keep the main subject in the centre so it survives both crops.
@@ -62,16 +69,12 @@ Shown at the top of each crop page (16:10 on phones, 5:4 on wide screens) and us
 
 These folders exist so material has an agreed home. The pages currently use illustrations here; wiring a photo into one of these places is a small code change.
 
-| Folder                      | For                                                                                         |
-| --------------------------- | ------------------------------------------------------------------------------------------- |
-| `public/images/hero/`       | A photographic alternative to the home illustration (2400 × 1350, subject low in the frame) |
-| `public/images/operations/` | One photo per operation, e.g. `seed-sowing.jpg` (sowing with a happy seeder)                |
-| `public/images/topics/`     | One photo per topic, e.g. `residue-management.jpg`                                          |
-| `public/images/learn/`      | Covers for songs, videos, stories (1600 × 900)                                              |
-| `public/images/kits/`       | Photos of kit sessions in villages (1600 × 1000)                                            |
-| `public/images/advisories/` | Photos for advisories (e.g. a pest close-up)                                                |
-| `public/images/stories/`    | Portraits of farmers in farmer stories                                                      |
-| `public/images/about/`      | Team and PAU campus photos for the About page                                               |
+| Folder                   | For                                                                                         |
+| ------------------------ | ------------------------------------------------------------------------------------------- |
+| `public/images/hero/`    | A photographic alternative to the home illustration (2400 × 1350, subject low in the frame) |
+| `public/images/topics/`  | One photo per topic, e.g. `residue-management.jpg`                                          |
+| `public/images/stories/` | Portraits of farmers in farmer stories                                                      |
+| `public/images/about/`   | Team and PAU campus photos for the About page                                               |
 
 ## Good sources
 

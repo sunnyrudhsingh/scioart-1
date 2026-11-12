@@ -7,11 +7,10 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "@/components/illustrations/Logo";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { ThemeToggle } from "./ThemeToggle";
-import { RegionChip } from "./RegionChip";
-import { isActive, moreNav, primaryNav } from "@/lib/nav";
+import { isActive, moreNav, primaryNav, type SectionLink } from "@/lib/nav";
 import { cn } from "@/lib/cn";
 
-export function Header() {
+export function Header({ sections }: { sections: SectionLink[] }) {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
   const pathname = usePathname();
@@ -55,6 +54,9 @@ export function Header() {
 
         <nav aria-label={t("primary")} className="hidden lg:me-auto lg:block">
           <ul className="flex items-center gap-0.5">
+            <li>
+              <MoreMenu id="sections-menu" label={t("sections")} pathname={pathname} items={sections} wide />
+            </li>
             {primaryNav.map((item) => {
               const active = isActive(pathname, item.href);
               return (
@@ -80,7 +82,12 @@ export function Header() {
               );
             })}
             <li>
-              <MoreMenu label={tc("more")} pathname={pathname} />
+              <MoreMenu
+                id="more-menu"
+                label={tc("more")}
+                pathname={pathname}
+                items={moreNav.map((i) => ({ href: i.href, label: t(i.key) }))}
+              />
             </li>
           </ul>
         </nav>
@@ -93,7 +100,6 @@ export function Header() {
           >
             <Search className="size-[18px]" aria-hidden="true" />
           </Link>
-          <RegionChip compact className="lg:max-xl:[&>span]:sr-only" />
           <LanguageSwitch compact />
           <ThemeToggle className="hidden lg:grid" />
         </div>
@@ -102,11 +108,22 @@ export function Header() {
   );
 }
 
-function MoreMenu({ label, pathname }: { label: string; pathname: string }) {
-  const t = useTranslations("nav");
+function MoreMenu({
+  id,
+  label,
+  pathname,
+  items,
+  wide,
+}: {
+  id: string;
+  label: string;
+  pathname: string;
+  items: SectionLink[];
+  wide?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const active = moreNav.some((i) => isActive(pathname, i.href));
+  const active = items.some((i) => isActive(pathname, i.href));
 
   useEffect(() => {
     if (!open) return;
@@ -127,7 +144,7 @@ function MoreMenu({ label, pathname }: { label: string; pathname: string }) {
       <button
         type="button"
         aria-expanded={open}
-        aria-controls="more-menu"
+        aria-controls={id}
         onClick={() => setOpen((v) => !v)}
         className={cn(
           "inline-flex h-11 items-center gap-1 rounded-full px-2 font-semibold whitespace-nowrap transition-colors hover:text-primary xl:px-3",
@@ -138,11 +155,14 @@ function MoreMenu({ label, pathname }: { label: string; pathname: string }) {
         <ChevronDown className={cn("size-4 transition-transform", open && "rotate-180")} aria-hidden="true" />
       </button>
       <ul
-        id="more-menu"
+        id={id}
         hidden={!open}
-        className="shadow-lift absolute end-0 top-full mt-2 min-w-56 rounded-2xl border border-line bg-surface p-2"
+        className={cn(
+          "shadow-lift absolute top-full mt-2 rounded-2xl border border-line bg-surface p-2",
+          wide ? "start-0 grid w-[34rem] grid-cols-2 gap-x-1" : "end-0 min-w-56",
+        )}
       >
-        {moreNav.map((item) => (
+        {items.map((item) => (
           <li key={item.href}>
             <Link
               href={item.href}
@@ -150,7 +170,7 @@ function MoreMenu({ label, pathname }: { label: string; pathname: string }) {
               onClick={() => setOpen(false)}
               className="flex min-h-11 items-center rounded-xl px-3 font-semibold hover:bg-surface-2 aria-[current=page]:text-primary"
             >
-              {t(item.key)}
+              {item.label}
             </Link>
           </li>
         ))}

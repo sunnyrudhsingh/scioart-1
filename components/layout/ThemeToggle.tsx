@@ -25,7 +25,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         const next = toDark ? "dark" : "light";
         document.documentElement.dataset.theme = next;
         writeStore(KEYS.theme, next);
-        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#0e1912" : "#fbf7ef");
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#1a0d12" : "#fff8ef");
       }}
       aria-label={toDark ? t("themeToDark") : t("themeToLight")}
       className={cn(

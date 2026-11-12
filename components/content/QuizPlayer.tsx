@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
 
 /** Multiple-choice quiz with instant feedback and a score at the end. */
 export function QuizPlayer({ questions, title }: { questions: QuizQuestion[]; title: string }) {
-  const t = useTranslations("learn");
+  const t = useTranslations("player");
   const locale = useLocale();
   const L = (x: L) => (locale === "en" ? x.en : x.pa);
   const [i, setI] = useState(0);

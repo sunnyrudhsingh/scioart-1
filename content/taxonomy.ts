@@ -1,11 +1,11 @@
 /**
- * The SciOArt taxonomy: seasons, crop groups, agronomic operations,
- * topics, learning formats, advisory and resource types, audiences.
+ * The SciOArt taxonomy: seasons, crop groups and the library sections
+ * (categories).
  *
  * All Punjabi names here are first drafts and need review by a
  * Punjabi-speaking subject expert before launch.
  */
-import { l, type Audience, type AdvisoryType, type CropGroup, type FormatId, type L, type Operation, type Season } from "./schema";
+import { l, type Category, type CropGroup, type Season } from "./schema";
 
 export const seasons: Season[] = [
   {
@@ -57,202 +57,81 @@ export const cropGroups: CropGroup[] = [
   { id: "allied", season: "allied", name: l("Allied & subsidiary", "ਸਹਾਇਕ ਧੰਦੇ") }, // pa: needs expert review
 ];
 
-/** The ten agronomic operations used for every field and horticultural crop, in order. */
-export const coreOperations: Operation[] = [
-  { slug: "varieties", name: l("Varieties", "ਕਿਸਮਾਂ"), short: l("Which variety to grow", "ਕਿਹੜੀ ਕਿਸਮ ਬੀਜੀਏ"), icon: "varieties" }, // pa: needs expert review
+/**
+ * The library sections, in the order they appear on the home page and in
+ * the menu. Each id is the section's web address (scioart.co.in/en/<id>).
+ */
+export const categories: Category[] = [
   {
-    slug: "land-preparation",
-    name: l("Land preparation", "ਜ਼ਮੀਨ ਦੀ ਤਿਆਰੀ"),
-    short: l("Getting the field ready", "ਖੇਤ ਤਿਆਰ ਕਰਨਾ"),
-    icon: "land-preparation",
-  }, // pa: needs expert review
-  {
-    slug: "seed-sowing",
-    name: l("Seed and sowing", "ਬੀਜ ਅਤੇ ਬਿਜਾਈ"),
-    short: l("Seed rate, treatment and sowing", "ਬੀਜ ਦੀ ਮਾਤਰਾ, ਸੋਧ ਅਤੇ ਬਿਜਾਈ"),
-    icon: "seed-sowing",
-  }, // pa: needs expert review
-  {
-    slug: "irrigation",
-    name: l("Irrigation", "ਸਿੰਚਾਈ"),
-    short: l("When and how much to water", "ਕਦੋਂ ਅਤੇ ਕਿੰਨਾ ਪਾਣੀ ਦੇਈਏ"),
-    icon: "irrigation",
-  }, // pa: needs expert review
-  {
-    slug: "nutrients",
-    name: l("Nutrient management", "ਖ਼ੁਰਾਕੀ ਤੱਤਾਂ ਦਾ ਪ੍ਰਬੰਧ"),
-    short: l("Fertilisers and manures", "ਖਾਦਾਂ ਅਤੇ ਰੂੜੀ"),
-    icon: "nutrients",
-  }, // pa: needs expert review
-  {
-    slug: "weeds",
-    name: l("Weed management", "ਨਦੀਨਾਂ ਦੀ ਰੋਕਥਾਮ"),
-    short: l("Keeping weeds in check", "ਨਦੀਨਾਂ ਨੂੰ ਕਾਬੂ ਰੱਖਣਾ"),
-    icon: "weeds",
-  }, // pa: needs expert review
-  {
-    slug: "insect-pests",
-    name: l("Insect pests", "ਕੀੜੇ-ਮਕੌੜੇ"),
-    short: l("Spotting and managing pests", "ਕੀੜਿਆਂ ਦੀ ਪਛਾਣ ਅਤੇ ਰੋਕਥਾਮ"),
-    icon: "insect-pests",
-  }, // pa: needs expert review
-  {
-    slug: "diseases",
-    name: l("Diseases", "ਬਿਮਾਰੀਆਂ"),
-    short: l("Spotting and managing diseases", "ਬਿਮਾਰੀਆਂ ਦੀ ਪਛਾਣ ਅਤੇ ਰੋਕਥਾਮ"),
-    icon: "diseases",
-  }, // pa: needs expert review
-  {
-    slug: "harvest-storage",
-    name: l("Harvesting and storage", "ਵਾਢੀ ਅਤੇ ਸਾਂਭ-ਸੰਭਾਲ"),
-    short: l("Harvest, threshing and storage", "ਵਾਢੀ, ਗਹਾਈ ਅਤੇ ਭੰਡਾਰਨ"),
-    icon: "harvest-storage",
-  }, // pa: needs expert review
-  {
-    slug: "machinery",
-    name: l("Farm machinery", "ਖੇਤੀ ਮਸ਼ੀਨਰੀ"),
-    short: l("Machines for this crop", "ਇਸ ਫ਼ਸਲ ਲਈ ਮਸ਼ੀਨਾਂ"),
-    icon: "machinery",
-  }, // pa: needs expert review
-];
-
-/** Extra operations used by allied occupations (data-driven per crop). */
-export const alliedOperations: Operation[] = [
-  {
-    slug: "substrate",
-    name: l("Compost and substrate", "ਖਾਦ ਅਤੇ ਮਾਧਿਅਮ"),
-    short: l("Preparing the growing medium", "ਉਗਾਉਣ ਲਈ ਮਾਧਿਅਮ ਤਿਆਰ ਕਰਨਾ"),
-    icon: "nutrients",
-  }, // pa: needs expert review
-  {
-    slug: "spawning",
-    name: l("Spawning", "ਬੀਜਾਈ (ਸਪਾਨਿੰਗ)"),
-    short: l("Adding spawn to the substrate", "ਮਾਧਿਅਮ ਵਿੱਚ ਬੀਜ ਪਾਉਣਾ"),
-    icon: "seed-sowing",
-  }, // pa: needs expert review
-  { slug: "crop-care", name: l("Crop care", "ਫ਼ਸਲ ਦੀ ਦੇਖਭਾਲ"), short: l("Day-to-day care", "ਰੋਜ਼ਾਨਾ ਦੇਖਭਾਲ"), icon: "crop-care" }, // pa: needs expert review
-  {
-    slug: "colony-management",
-    name: l("Colony management", "ਕਟੁੰਬ ਪ੍ਰਬੰਧ"),
-    short: l("Keeping colonies strong", "ਕਟੁੰਬਾਂ ਨੂੰ ਤਕੜਾ ਰੱਖਣਾ"),
-    icon: "crop-care",
-  }, // pa: needs expert review
-  {
-    slug: "seasonal-care",
-    name: l("Seasonal management", "ਮੌਸਮੀ ਪ੍ਰਬੰਧ"),
-    short: l("Care through the year", "ਸਾਰਾ ਸਾਲ ਦੇਖਭਾਲ"),
-    icon: "irrigation",
-  }, // pa: needs expert review
-  {
-    slug: "pests-diseases",
-    name: l("Pests and diseases", "ਕੀੜੇ ਅਤੇ ਬਿਮਾਰੀਆਂ"),
-    short: l("Protecting the enterprise", "ਧੰਦੇ ਦੀ ਸੁਰੱਖਿਆ"),
-    icon: "insect-pests",
-  }, // pa: needs expert review
-  {
-    slug: "nursery",
-    name: l("Nursery and planting material", "ਨਰਸਰੀ ਅਤੇ ਬੂਟੇ"),
-    short: l("Raising healthy plants", "ਸਿਹਤਮੰਦ ਬੂਟੇ ਤਿਆਰ ਕਰਨਾ"),
-    icon: "seed-sowing",
-  }, // pa: needs expert review
-  {
-    slug: "harvest",
-    name: l("Harvest and processing", "ਤੁੜਾਈ ਅਤੇ ਪ੍ਰੋਸੈਸਿੰਗ"),
-    short: l("Harvesting and first processing", "ਤੁੜਾਈ ਅਤੇ ਮੁੱਢਲੀ ਪ੍ਰੋਸੈਸਿੰਗ"),
-    icon: "harvest-storage",
-  }, // pa: needs expert review
-  { slug: "marketing", name: l("Marketing", "ਮੰਡੀਕਰਨ"), short: l("Selling the produce", "ਉਪਜ ਵੇਚਣਾ"), icon: "marketing" }, // pa: needs expert review
-];
-
-export const allOperations: Operation[] = [...coreOperations, ...alliedOperations];
-
-export const coreOperationSlugs = coreOperations.map((o) => o.slug);
-
-export type FormatInfo = { id: FormatId; name: L; plural: L };
-
-export const formats: FormatInfo[] = [
-  { id: "game", name: l("Game", "ਖੇਡ"), plural: l("Games", "ਖੇਡਾਂ") },
-  { id: "song", name: l("Song", "ਗੀਤ"), plural: l("Songs", "ਗੀਤ") },
-  { id: "jingle", name: l("Jingle", "ਜਿੰਗਲ"), plural: l("Jingles", "ਜਿੰਗਲ") },
-  { id: "video", name: l("Video", "ਵੀਡੀਓ"), plural: l("Videos", "ਵੀਡੀਓ") },
-  { id: "emodule", name: l("E-module", "ਈ-ਮਾਡਿਊਲ"), plural: l("E-modules", "ਈ-ਮਾਡਿਊਲ") },
-  { id: "quiz", name: l("Quiz", "ਕੁਇਜ਼"), plural: l("Quizzes", "ਕੁਇਜ਼") },
-  { id: "story", name: l("Farmer story", "ਕਿਸਾਨ ਦੀ ਕਹਾਣੀ"), plural: l("Farmer stories", "ਕਿਸਾਨਾਂ ਦੀਆਂ ਕਹਾਣੀਆਂ") },
-  { id: "podcast", name: l("Podcast", "ਪੌਡਕਾਸਟ"), plural: l("Podcasts", "ਪੌਡਕਾਸਟ") },
-  { id: "play-film", name: l("Play or film", "ਨਾਟਕ ਜਾਂ ਫ਼ਿਲਮ"), plural: l("Plays & films", "ਨਾਟਕ ਅਤੇ ਫ਼ਿਲਮਾਂ") },
-];
-
-export const advisoryTypes: { id: AdvisoryType; name: L }[] = [
-  { id: "seasonal", name: l("Seasonal advisory", "ਮੌਸਮੀ ਸਲਾਹ") },
-  { id: "alert", name: l("Pest/disease alert", "ਕੀਟ/ਬਿਮਾਰੀ ਚੇਤਾਵਨੀ") },
-  { id: "weather", name: l("Weather note", "ਮੌਸਮ ਸੂਚਨਾ") },
-  { id: "variety", name: l("New variety", "ਨਵੀਂ ਕਿਸਮ") },
-  { id: "event", name: l("Event", "ਸਮਾਗਮ") },
-  { id: "news", name: l("News", "ਖ਼ਬਰਾਂ") },
-];
-
-export const resourceTypes: { id: "editions" | "leaflets" | "glossary" | "research"; name: L; description: L }[] = [
-  {
-    id: "editions",
-    name: l("PoP edition archive", "ਖੇਤੀ ਸਿਫ਼ਾਰਸ਼ਾਂ ਦਾ ਪੁਰਾਲੇਖ"),
-    description: l("Every yearly edition of the Packages of Practices, from 2023.", "2023 ਤੋਂ ਖੇਤੀ ਸਿਫ਼ਾਰਸ਼ਾਂ ਦੀ ਹਰ ਸਾਲਾਨਾ ਕਿਤਾਬ।"),
+    id: "culture",
+    name: l("Culture & heritage", "ਸਭਿਆਚਾਰ ਤੇ ਵਿਰਸਾ"), // pa: needs expert review
+    short: l("Folk arts, festivals and farm traditions of Punjab", "ਪੰਜਾਬ ਦੀਆਂ ਲੋਕ ਕਲਾਵਾਂ, ਤਿਉਹਾਰ ਤੇ ਖੇਤੀ ਰਵਾਇਤਾਂ"), // pa: needs expert review
+    action: "watch",
   },
   {
-    id: "leaflets",
-    name: l("Leaflets", "ਪਰਚੇ"),
-    description: l("Short printable leaflets for farmers.", "ਕਿਸਾਨਾਂ ਲਈ ਛੋਟੇ, ਛਾਪਣਯੋਗ ਪਰਚੇ।"),
+    id: "documentaries",
+    name: l("Documentaries", "ਦਸਤਾਵੇਜ਼ੀ ਫ਼ਿਲਮਾਂ"), // pa: needs expert review
+    short: l("True stories from Punjab's fields and labs", "ਪੰਜਾਬ ਦੇ ਖੇਤਾਂ ਤੇ ਪ੍ਰਯੋਗਸ਼ਾਲਾਵਾਂ ਦੀਆਂ ਸੱਚੀਆਂ ਕਹਾਣੀਆਂ"), // pa: needs expert review
+    action: "watch",
   },
   {
-    id: "glossary",
-    name: l("Glossary", "ਸ਼ਬਦਾਵਲੀ"),
-    description: l("Farm words in English and Punjabi, explained simply.", "ਖੇਤੀ ਦੇ ਸ਼ਬਦ ਅੰਗਰੇਜ਼ੀ ਅਤੇ ਪੰਜਾਬੀ ਵਿੱਚ, ਸੌਖੇ ਢੰਗ ਨਾਲ।"),
+    id: "live",
+    name: l("Live", "ਲਾਈਵ"), // pa: needs expert review
+    short: l("Our live programs, and recordings of past ones", "ਸਾਡੇ ਲਾਈਵ ਪ੍ਰੋਗਰਾਮ ਤੇ ਪਿਛਲੇ ਪ੍ਰੋਗਰਾਮਾਂ ਦੀਆਂ ਰਿਕਾਰਡਿੰਗਾਂ"), // pa: needs expert review
+    action: "watch",
   },
   {
-    id: "research",
-    name: l("Research summaries", "ਖੋਜ ਸਾਰ"),
-    description: l("Short summaries of research, written for everyone.", "ਖੋਜ ਦੇ ਛੋਟੇ ਸਾਰ, ਹਰ ਕਿਸੇ ਦੀ ਸਮਝ ਲਈ।"),
-  },
-];
-
-export const audiences: Audience[] = [
-  {
-    id: "farmers",
-    name: l("Farmers", "ਕਿਸਾਨ"),
-    singular: l("Farmer", "ਕਿਸਾਨ"),
-    intro: l(
-      "Practical guidance for your crop and district, this week's tasks, and answers from experts.",
-      "ਤੁਹਾਡੀ ਫ਼ਸਲ ਅਤੇ ਜ਼ਿਲ੍ਹੇ ਲਈ ਅਮਲੀ ਸਲਾਹ, ਇਸ ਹਫ਼ਤੇ ਦੇ ਕੰਮ, ਅਤੇ ਮਾਹਿਰਾਂ ਦੇ ਜਵਾਬ।",
-    ),
-    icon: "farmer",
+    id: "jingles",
+    name: l("Jingles", "ਜਿੰਗਲ"), // pa: needs expert review
+    short: l("Short, catchy messages to sing along", "ਛੋਟੇ ਤੇ ਯਾਦ ਰਹਿਣ ਵਾਲੇ ਸੁਨੇਹੇ"), // pa: needs expert review
+    action: "listen",
   },
   {
-    id: "extension-workers",
-    name: l("Extension workers", "ਪਸਾਰ ਕਾਮੇ"),
-    singular: l("Extension worker", "ਪਸਾਰ ਕਾਮਾ"),
-    intro: l(
-      "Ready-to-run training kits, games and songs for farmer meetings, with tests to measure learning.",
-      "ਕਿਸਾਨ ਮਿਲਣੀਆਂ ਲਈ ਤਿਆਰ ਸਿਖਲਾਈ ਕਿੱਟਾਂ, ਖੇਡਾਂ ਅਤੇ ਗੀਤ, ਸਿੱਖਣ ਨੂੰ ਮਾਪਣ ਲਈ ਟੈਸਟਾਂ ਸਮੇਤ।",
-    ),
-    icon: "extension",
+    id: "scientific-songs",
+    name: l("Scientific songs", "ਵਿਗਿਆਨਕ ਗੀਤ"), // pa: needs expert review
+    short: l("Farm science set to music", "ਸੰਗੀਤ ਵਿੱਚ ਖੇਤੀ ਵਿਗਿਆਨ"), // pa: needs expert review
+    action: "listen",
   },
   {
-    id: "students",
-    name: l("Students", "ਵਿਦਿਆਰਥੀ"),
-    singular: l("Student", "ਵਿਦਿਆਰਥੀ"),
-    intro: l(
-      "Crop-by-crop practices, e-modules with quizzes, and a bilingual glossary of farm terms.",
-      "ਹਰ ਫ਼ਸਲ ਦੀਆਂ ਸਿਫ਼ਾਰਸ਼ਾਂ, ਕੁਇਜ਼ ਵਾਲੇ ਈ-ਮਾਡਿਊਲ, ਅਤੇ ਖੇਤੀ ਸ਼ਬਦਾਂ ਦੀ ਦੋ-ਭਾਸ਼ੀ ਸ਼ਬਦਾਵਲੀ।",
-    ),
-    icon: "student",
+    id: "theatre",
+    name: l("Theatre", "ਰੰਗਮੰਚ"), // pa: needs expert review
+    short: l("Plays and street plays (nukkad natak)", "ਨਾਟਕ ਤੇ ਨੁੱਕੜ ਨਾਟਕ"), // pa: needs expert review
+    action: "watch",
   },
   {
-    id: "researchers",
-    name: l("Researchers", "ਖੋਜਕਾਰ"),
-    singular: l("Researcher", "ਖੋਜਕਾਰ"),
-    intro: l(
-      "Edition archives, research summaries and edutainment tools you can use in field studies.",
-      "ਸਿਫ਼ਾਰਸ਼ਾਂ ਦਾ ਪੁਰਾਲੇਖ, ਖੋਜ ਸਾਰ, ਅਤੇ ਖੇਤ ਅਧਿਐਨਾਂ ਵਿੱਚ ਵਰਤਣਯੋਗ ਸਿੱਖਿਆ-ਮਨੋਰੰਜਨ ਸਾਧਨ।",
-    ),
-    icon: "researcher",
+    id: "short-films",
+    name: l("Short films", "ਲਘੂ ਫ਼ਿਲਮਾਂ"), // pa: needs expert review
+    short: l("Small films with a big message", "ਛੋਟੀਆਂ ਫ਼ਿਲਮਾਂ, ਵੱਡਾ ਸੁਨੇਹਾ"), // pa: needs expert review
+    action: "watch",
+  },
+  {
+    id: "podcasts",
+    name: l("Podcasts & radio talks", "ਪੌਡਕਾਸਟ ਤੇ ਰੇਡੀਓ ਵਾਰਤਾਵਾਂ"), // pa: needs expert review
+    short: l("Conversations to listen to anywhere", "ਕਿਤੇ ਵੀ ਸੁਣਨ ਲਈ ਗੱਲਬਾਤ"), // pa: needs expert review
+    action: "listen",
+  },
+  {
+    id: "games",
+    name: l("Games", "ਖੇਡਾਂ"), // pa: needs expert review
+    short: l("Board and card games to print and play", "ਛਾਪ ਕੇ ਖੇਡਣ ਵਾਲੀਆਂ ਬੋਰਡ ਤੇ ਤਾਸ਼ ਖੇਡਾਂ"), // pa: needs expert review
+    action: "play",
+  },
+  {
+    id: "e-modules",
+    name: l("E-modules", "ਈ-ਮਾਡਿਊਲ"), // pa: needs expert review
+    short: l("Short lessons with a quiz at the end", "ਅੰਤ ਵਿੱਚ ਕੁਇਜ਼ ਵਾਲੇ ਛੋਟੇ ਪਾਠ"), // pa: needs expert review
+    action: "learn",
+  },
+  {
+    id: "e-books",
+    name: l("E-books", "ਈ-ਕਿਤਾਬਾਂ"), // pa: needs expert review
+    short: l("Books to read on your phone or download", "ਫ਼ੋਨ 'ਤੇ ਪੜ੍ਹਨ ਜਾਂ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਕਿਤਾਬਾਂ"), // pa: needs expert review
+    action: "read",
+  },
+  {
+    id: "posters-comics",
+    name: l("Posters & comics", "ਪੋਸਟਰ ਤੇ ਕਾਮਿਕਸ"), // pa: needs expert review
+    short: l("Pictures that tell the story at a glance", "ਇੱਕ ਨਜ਼ਰ ਵਿੱਚ ਗੱਲ ਦੱਸਦੀਆਂ ਤਸਵੀਰਾਂ"), // pa: needs expert review
+    action: "read",
   },
 ];

@@ -1,17 +1,8 @@
-import {
-  getAdvisories,
-  getAllOperationsForSearch,
-  getCrops,
-  getGlossary,
-  getKits,
-  getLearnItems,
-  getResources,
-  getTopics,
-} from "./content";
+import { getCategories, getCategory, getCrops, getGlossary, getMaterials, getResources, getTopics, materialHref } from "./content";
 import { tx, txOther } from "./text";
 
 export type SearchEntry = {
-  type: "crop" | "operation" | "topic" | "learn" | "kit" | "advisory" | "resource" | "glossary";
+  type: "material" | "section" | "crop" | "topic" | "resource" | "glossary";
   href: string;
   title: string;
   alt: string;
@@ -23,6 +14,27 @@ export type SearchEntry = {
 export function buildSearchIndex(locale: string): SearchEntry[] {
   const entries: SearchEntry[] = [];
 
+  for (const m of getMaterials()) {
+    const c = getCategory(m.category)!;
+    entries.push({
+      type: "material",
+      href: materialHref(m),
+      title: tx(m.title, locale),
+      alt: `${txOther(m.title, locale)} ${tx(c.name, locale)} ${txOther(c.name, locale)}`,
+      text: tx(m.description, locale),
+      textAlt: txOther(m.description, locale),
+    });
+  }
+  for (const c of getCategories()) {
+    entries.push({
+      type: "section",
+      href: `/${c.id}`,
+      title: tx(c.name, locale),
+      alt: txOther(c.name, locale),
+      text: tx(c.short, locale),
+      textAlt: txOther(c.short, locale),
+    });
+  }
   for (const c of getCrops()) {
     entries.push({
       type: "crop",
@@ -31,17 +43,6 @@ export function buildSearchIndex(locale: string): SearchEntry[] {
       alt: txOther(c.name, locale),
       text: tx(c.description, locale),
       textAlt: txOther(c.description, locale),
-    });
-  }
-  for (const { crop, op, ready } of getAllOperationsForSearch()) {
-    if (!ready) continue;
-    entries.push({
-      type: "operation",
-      href: `/crops/${crop.slug}/${op.slug}`,
-      title: `${tx(op.name, locale)} — ${tx(crop.name, locale)}`,
-      alt: `${txOther(op.name, locale)} ${txOther(crop.name, locale)}`,
-      text: tx(op.short, locale),
-      textAlt: txOther(op.short, locale),
     });
   }
   for (const t of getTopics()) {
@@ -54,40 +55,10 @@ export function buildSearchIndex(locale: string): SearchEntry[] {
       textAlt: txOther(t.short, locale),
     });
   }
-  for (const i of getLearnItems()) {
-    entries.push({
-      type: "learn",
-      href: `/learn/${i.slug}`,
-      title: tx(i.title, locale),
-      alt: txOther(i.title, locale),
-      text: tx(i.description, locale),
-      textAlt: txOther(i.description, locale),
-    });
-  }
-  for (const k of getKits()) {
-    entries.push({
-      type: "kit",
-      href: `/extension/${k.slug}`,
-      title: tx(k.title, locale),
-      alt: txOther(k.title, locale),
-      text: tx(k.summary, locale),
-      textAlt: txOther(k.summary, locale),
-    });
-  }
-  for (const a of getAdvisories()) {
-    entries.push({
-      type: "advisory",
-      href: `/advisories/${a.slug}`,
-      title: tx(a.title, locale),
-      alt: txOther(a.title, locale),
-      text: tx(a.summary, locale),
-      textAlt: txOther(a.summary, locale),
-    });
-  }
   for (const r of getResources()) {
     entries.push({
       type: "resource",
-      href: `/resources/${r.type === "leaflet" ? "leaflets" : "research"}`,
+      href: `/resources/research`,
       title: tx(r.title, locale),
       alt: txOther(r.title, locale),
       text: tx(r.description, locale),

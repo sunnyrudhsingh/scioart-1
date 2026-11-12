@@ -9,12 +9,11 @@ import { clientMessages, type Messages } from "@/messages";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { BottomNav } from "@/components/layout/BottomNav";
-import { RegionProvider } from "@/components/layout/RegionProvider";
 import { themeScript } from "@/components/layout/ThemeToggle";
-import { AdvisoryBanner } from "@/components/content/AdvisoryBanner";
 import { PwaProvider } from "@/components/layout/PwaProvider";
-import { getAdvisories, getLocations } from "@/lib/content";
-import { SITE_URL } from "@/lib/site";
+import { getCategories } from "@/lib/content";
+import { tx } from "@/lib/text";
+import { PALETTE, SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -46,8 +45,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbf7ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#0e1912" },
+    { media: "(prefers-color-scheme: light)", color: "#fff8ef" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a0d12" },
   ],
 };
 
@@ -58,10 +57,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
   const messages = (await getMessages()) as Messages;
   const tc = await getTranslations("common");
-  const urgent = getAdvisories().filter((a) => a.urgent);
+  const sections = getCategories().map((c) => ({ href: `/${c.id}`, label: tx(c.name, locale) }));
 
   return (
-    <html lang={locale} className={fontVariables} suppressHydrationWarning>
+    <html lang={locale} className={fontVariables} data-palette={PALETTE} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
@@ -74,15 +73,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         </a>
         <NextIntlClientProvider messages={clientMessages(messages)}>
           <PwaProvider>
-            <RegionProvider locations={getLocations()}>
-              <AdvisoryBanner advisories={urgent} />
-              <Header />
-              <main id="main" tabIndex={-1} className="outline-none">
-                {children}
-              </main>
-              <Footer />
-              <BottomNav />
-            </RegionProvider>
+            <Header sections={sections} />
+            <main id="main" tabIndex={-1} className="outline-none">
+              {children}
+            </main>
+            <Footer />
+            <BottomNav sections={sections} />
           </PwaProvider>
         </NextIntlClientProvider>
       </body>

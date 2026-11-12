@@ -27,7 +27,7 @@ export default async function ResearchPage({ params }: PageProps<"/[locale]/reso
         <Breadcrumbs locale={locale} items={[{ href: "/resources", label: t("title") }, { label: t("researchTitle") }]} />
         <PageHeader title={t("researchTitle")} lead={t("researchLead")} />
         <ul className="grid gap-4 md:grid-cols-2">
-          {getResources("research").map((r, i) => (
+          {getResources().map((r, i) => (
             <li key={r.slug} data-reveal style={{ ["--i" as string]: i }}>
               <article className="flex h-full flex-col rounded-[var(--radius-card)] bg-surface p-6 ring-1 ring-line">
                 <div className="flex items-center justify-between gap-3">

@@ -26,7 +26,7 @@ export function AudioPlayer({
   placeholder?: boolean;
   className?: string;
 }) {
-  const t = useTranslations("learn");
+  const t = useTranslations("player");
   const tc = useTranslations("common");
   const audio = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);

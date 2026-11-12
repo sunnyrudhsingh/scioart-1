@@ -3,15 +3,15 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "SciOArt — ਖੇਤੀ ਗਿਆਨ / Farm knowledge",
+    name: "SciOArt — ਵਿਗਿਆਨ ਤੇ ਕਲਾ / Science and art",
     short_name: "SciOArt",
-    description: "PAU-reviewed farm advice, games, songs and training kits in Punjabi and English.",
+    description: "Films, songs, plays, games and books about farming in Punjab, in Punjabi and English.",
     start_url: "/",
     scope: "/",
     display: "standalone",
     orientation: "portrait",
-    background_color: "#fbf7ef",
-    theme_color: "#1f5e3b",
+    background_color: "#fff8ef",
+    theme_color: "#6d1131",
     lang: "pa",
     categories: ["education", "agriculture"],
     icons: [
@@ -21,9 +21,9 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icon.svg", sizes: "any", type: "image/svg+xml" },
     ],
     shortcuts: [
+      { name: "ਲਾਇਬ੍ਰੇਰੀ / Library", url: "/pa/library" },
+      { name: "ਲਾਈਵ / Live", url: "/pa/live" },
       { name: "ਫ਼ਸਲਾਂ / Crops", url: "/pa/crops" },
-      { name: "ਫ਼ਸਲ ਕੈਲੰਡਰ / Calendar", url: "/pa/calendar" },
-      { name: "ਮਾਹਿਰ ਨੂੰ ਪੁੱਛੋ / Ask an Expert", url: "/pa/ask" },
     ],
   };
 }

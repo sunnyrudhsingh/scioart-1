@@ -1,5 +1,5 @@
 // Generates the SAMPLE placeholder files in /public/samples:
-// one-page PDFs for games, leaflets and kit files, and short silent MP3s.
+// one-page PDFs for games, e-books and comics, and short silent MP3s.
 // Run: node scripts/make-samples.mjs   (MP3s need ffmpeg installed)
 import { mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -49,31 +49,18 @@ write(
   pdf("IPM Snakes and Ladders", ["Board, question cards and rules will go here.", "Print on A3 for groups, A4 for small teams."]),
 );
 write("sample-weed-watch-cards.pdf", pdf("Weed Watch card game", ["Card sheets to print and cut will go here."]));
-write("sample-wheat-leaflet.pdf", pdf("Wheat at a glance", ["Two-page leaflet based on the PAU Package of Practices."]));
-write("sample-safe-spraying-leaflet.pdf", pdf("Safe spraying", ["Protective clothing, labels and clean-up, in pictures."]));
-
-const kits = {
-  "wheat-weed-management": "Wheat - Weed management",
-  "wheat-insect-pests": "Wheat - Insect pests",
-  "wheat-diseases": "Wheat - Diseases",
-};
-const parts = {
-  "facilitator-guide": "Facilitator guide",
-  slides: "Slides",
-  leaflet: "Farmer leaflet",
-  activity: "Group activity",
-  "pre-test": "Pre-test",
-  "post-test": "Post-test",
-  "feedback-form": "Feedback form",
-};
-for (const [slug, title] of Object.entries(kits)) {
-  for (const [part, name] of Object.entries(parts)) {
-    write(`kits/${slug}/${part}.pdf`, pdf(`${title}: ${name}`, ["Extension kit file - content to be added by the PAU team."]));
-  }
-}
+write("sample-ebook.pdf", pdf("Stories from the fields (sample e-book)", ["The pages of the e-book will go here."]));
+write("sample-comic.pdf", pdf("The friendly insects (sample comic)", ["Comic pages will go here."]));
 
 // Silent placeholder audio (3 seconds). Requires ffmpeg.
-const audio = ["sample-song-of-the-soil", "sample-every-drop-counts", "sample-straw-is-gold", "sample-kheti-gal-baat-1"];
+const audio = [
+  "sample-song-of-the-soil",
+  "sample-every-drop-counts",
+  "sample-straw-is-gold",
+  "sample-kheti-gal-baat-1",
+  "sample-boliyan",
+  "sample-every-drop-jingle",
+];
 for (const name of audio) {
   const file = path.join(out, `${name}.mp3`);
   if (existsSync(file)) continue;

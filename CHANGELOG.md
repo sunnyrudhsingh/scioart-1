@@ -1,5 +1,24 @@
 # Changelog
 
+## v2.0.0 (November 2026): SciOArt becomes a library
+
+SciOArt now shares materials only: it no longer gives farm advice or answers questions.
+
+### New
+
+- Twelve library sections, each with its own page and a button on the home page: Culture & heritage, Documentaries, Live, Jingles, Scientific songs, Theatre, Short films, Podcasts & radio talks, Games, E-modules, E-books, Posters & comics
+- A Library page with every section and every item, filtered by section, crop, theme and language
+- One page per item that plays, shows or opens whatever it holds: video, audio with lyrics, PDF to read or download, pictures, a printable game with rules, an e-module with a quiz, credits
+- Live programs: "coming up", "live now" and "past programs" worked out on the visitor's clock, with a "Watch live on YouTube/Facebook" button and the recording afterwards; the next live program on the home page
+- New home page: "Science and art from Punjab's fields", section buttons, next live program, newest items, a showcase, browse by theme and by crop
+- New menus: Sections, Library, Live, Crops, Themes
+- New look: the Phulkari palette (maroon, gold, magenta) with an original phulkari embroidery pattern, one bold colour per kind of item, and new app icons
+
+### Removed
+
+- Crop guides (Package of Practices chapters) and the edition archive, crop calendar, advisories and the alert banner, extension training kits, Ask an Expert, the district picker and the "I am a…" pages
+- Old links to these pages now lead to the nearest new page
+
 ## v1.0.0 (October 2026): first full build
 
 The complete site structure, design and features, filled with clearly marked sample content.

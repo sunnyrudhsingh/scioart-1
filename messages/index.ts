@@ -10,20 +10,7 @@ export function messagesFor(locale: string): Messages {
 }
 
 /** Only these namespaces are sent to the browser (client components). */
-export const clientNamespaces = [
-  "common",
-  "nav",
-  "region",
-  "home",
-  "crops",
-  "calendar",
-  "learn",
-  "extension",
-  "advisories",
-  "resources",
-  "search",
-  "ask",
-] as const;
+export const clientNamespaces = ["common", "nav", "home", "crops", "library", "live", "player", "resources", "search"] as const;
 
 export function clientMessages(messages: Messages) {
   return Object.fromEntries(clientNamespaces.map((ns) => [ns, messages[ns]]));

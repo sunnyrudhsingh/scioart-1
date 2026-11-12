@@ -1,15 +1,17 @@
 # SciOArt
 
-A bilingual (ਪੰਜਾਬੀ and English) farm knowledge, extension and edutainment website, built around the Punjab Agricultural University (PAU) Package of Practices. Live at **scioart.co.in** once deployed.
+A bilingual (ਪੰਜਾਬੀ and English) library of science and art from Punjab's fields, made at Punjab Agricultural University (PAU). Live at **scioart.co.in**.
 
-- Every crop, every agronomic operation, every yearly edition (2023 onwards), in Punjabi and English
-- An extension kit for each operation: facilitator guide, slides, farmer leaflet, group activity, pre- and post-test, feedback form
-- Learn & Play: printable games, songs and jingles, videos, e-modules with quizzes, farmer stories, podcasts
-- Crop calendar from your sowing date, with "add to phone calendar"
-- Advisories, leaflets, glossary, research summaries, Ask an Expert
-- Works on cheap phones and slow networks; recently opened pages work offline
+SciOArt shares **materials**: it does not give personal farm advice or answer individual questions. The library has twelve sections:
 
-> **All agricultural content in this repository is SAMPLE content.** Values are shown as "—" or "to be added". Nothing here is a recommendation until it is replaced with the official PAU text and approved by the reviewer. See [CONTENT_GUIDE.md](CONTENT_GUIDE.md).
+- **Watch:** Culture & heritage, Documentaries, Theatre, Short films, Live (upcoming programs and recordings)
+- **Listen:** Jingles, Scientific songs, Podcasts & radio talks
+- **Play / learn:** Games, E-modules
+- **Read:** E-books, Posters & comics
+
+Every item can also be found by crop and by theme, and the whole site can be searched in Punjabi or English. It works on cheap phones and slow networks, and recently opened pages work offline.
+
+> **All items in this repository are SAMPLES**, marked with a "Sample" badge, until the real films, songs and books replace them. See [CONTENT_GUIDE.md](CONTENT_GUIDE.md).
 
 ## Stack
 
@@ -20,7 +22,6 @@ A bilingual (ਪੰਜਾਬੀ and English) farm knowledge, extension and eduta
 | Languages    | next-intl, routes `/pa/...` (default) and `/en/...`                     |
 | Content      | Typed TypeScript files in `content/`, validated with zod at build time  |
 | Search       | Fuse.js over a static index (`/search-index/pa`, `/search-index/en`)    |
-| Forms        | react-hook-form + zod; Supabase for storing questions (optional)        |
 | Offline      | Serwist service worker (`/serwist/sw.js`)                               |
 | Share images | `next/og` at `/og`                                                      |
 | Fonts        | Self-hosted: Fraunces, Inter, Noto Sans Gurmukhi, Mukta Mahee (SIL OFL) |
@@ -66,49 +67,39 @@ Every push to `main` deploys automatically. Pull requests get their own preview 
 
 ## Environment variables
 
-Copy `.env.example` to `.env.local` for local work. All are optional; the site works without them.
+Copy `.env.example` to `.env.local` for local work. It is optional; the site works without it.
 
-| Name                            | What it does                                                                                               |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`          | Full site address, used in canonical links, the sitemap and share images. Default `https://scioart.co.in`. |
-| `NEXT_PUBLIC_SUPABASE_URL`      | Supabase project URL, for saving Ask an Expert questions.                                                  |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase public (anon) key.                                                                                |
-
-Without the Supabase variables, the Ask an Expert form runs in demo mode: it validates and shows the success screen but stores nothing.
+| Name                   | What it does                                                                                               |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | Full site address, used in canonical links, the sitemap and share images. Default `https://scioart.co.in`. |
 
 ## Making changes with Codex (or Claude Code)
 
 Both assistants read `AGENTS.md`, which holds the project rules and the owner's working instructions.
 
 1. At chatgpt.com/codex, connect GitHub and choose `sunnyrudhsingh/scioart-1`. In the environment's setup script, put `npm ci`.
-2. Describe the change in plain words, for example "Add this official wheat sowing text as a draft guide", and paste the official text.
+2. Describe the change in plain words, for example "Add this jingle to the library" with the MP3 file, its title in both languages and who made it.
 3. Codex makes the change on a new branch and opens a pull request. Vercel adds a preview link to it within a few minutes.
 4. Open the preview link on your phone, in Punjabi and English. Content changes go to the reviewer first.
 5. When it is approved, merge the pull request on GitHub (**Merge pull request** → **Confirm merge**). scioart.co.in updates within a few minutes.
 
 If the build fails, nothing changes on the live site. Ask Codex to read the error on the pull request and fix it.
 
-## Supabase (Ask an Expert)
-
-1. Create a free project at supabase.com (region: Mumbai).
-2. Open **SQL Editor**, paste the contents of `supabase/schema.sql`, and run it. This creates the `expert_questions` table, a `question-photos` storage bucket, and rules that let the public **send** questions but not read them.
-3. Project Settings → API: copy the Project URL and the `anon` public key into the Vercel environment variables above, then redeploy.
-4. Read incoming questions in Supabase → Table Editor → `expert_questions`. Photos are in Storage → `question-photos`.
-
 ## Project layout
 
 ```
-app/[locale]/          pages (home, crops, topics, calendar, learn, extension, advisories, resources, search, ask, for/[audience], about, privacy)
+app/[locale]/          pages: home, library, [category] (one page per section) and [category]/[slug] (one item),
+                       crops, topics, resources, search, about, privacy
 app/og/                share-image generator
 app/serwist/, app/sw.ts service worker
 app/search-index/      static search data
 components/            illustrations, layout, motion, ui, content, home
-content/               ALL site content (see CONTENT_GUIDE.md)
+content/               ALL site content; the library items are in content/materials.ts
 lib/content.ts         reads and validates content; the only place pages get data from
 messages/en.json, pa.json   interface text
-public/samples/        placeholder downloads (replace with real files)
+public/media/          real audio, PDFs and covers, one folder per section (see CONTENT_GUIDE.md)
+public/samples/        placeholder files (delete once real items replace them)
 public/images/         photos (see IMAGES.md)
-supabase/schema.sql    database setup for Ask an Expert
 ```
 
 ## Documents

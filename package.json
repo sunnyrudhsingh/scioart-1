@@ -13,18 +13,14 @@
     "icons": "node scripts/make-icons.mjs"
   },
   "dependencies": {
-    "@hookform/resolvers": "^6.0.2",
     "@serwist/turbopack": "^9.5.13",
-    "@supabase/supabase-js": "^2.118.0",
     "clsx": "^2.1.1",
     "fuse.js": "^7.5.0",
-    "jszip": "^3.10.2",
     "lucide-react": "^1.63.0",
     "next": "16.4.3",
     "next-intl": "^4.14.9",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-hook-form": "^7.91.0",
     "serwist": "^9.5.13",
     "zod": "^4.6.7"
   },

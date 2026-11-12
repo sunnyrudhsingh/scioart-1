@@ -5,16 +5,17 @@ This file (AGENTS.md) is read automatically by Codex and, through CLAUDE.md, by 
 ## Who and what
 
 - **Owner and maintainer:** Sunnyrudh Singh, PhD scholar in Agricultural Extension at Punjab Agricultural University (PAU), Ludhiana. Writes in English and Punjabi; not a professional programmer, so explain steps plainly and do the work rather than handing back instructions.
-- **Content reviewer:** his advisor, the Associate Director in charge of media and communication at PAU. Every recommendation is approved by him before it goes live.
-- **Site:** scioart.co.in, a bilingual (Punjabi default, English) farm knowledge, extension and edutainment platform built around the PAU Package of Practices (Rabi, Kharif, fruits, vegetables, allied occupations), every yearly edition from 2023, with an extension kit for every agronomic operation.
-- **Audiences:** farmers (first), extension workers, students, researchers. Many use cheap Android phones on mobile data in Punjab.
+- **Content reviewer:** his advisor, the Associate Director in charge of media and communication at PAU. Every item is approved by him before it goes live.
+- **Site:** scioart.co.in, a bilingual (Punjabi default, English) **library of science and art materials** made at PAU: culture & heritage, documentaries, live programs, jingles, scientific songs, theatre, short films, podcasts & radio talks, games, e-modules, e-books, posters & comics. Items can also be browsed by crop and by theme.
+- **What it is not:** since v2.0 (November 2026) SciOArt gives **no personal farm advice and answers no questions**. The owner removed the crop guides (Package of Practices chapters), crop calendar, advisories, extension kits and Ask an Expert on purpose. Do not add them back unless he asks.
+- **Audiences:** farmers, students, teachers, extension workers and the general public. Many use cheap Android phones on mobile data in Punjab.
 
 ## Working with Sunnyrudh (owner's standing instructions)
 
 - He is not a programmer. Do the work yourself; explain only what he needs to know or decide, in plain words, and keep technical detail out of your replies.
-- Never invent farm recommendations (doses, varieties, dates, chemicals, yields). He supplies the official PAU text. If something is missing, put "—" and ask him.
+- Never invent farm facts (doses, varieties, dates, chemicals, yields) or the details of an item (credits, dates, links). He supplies them. If something is missing, put "To be added" and ask him.
 - Every text in English and Punjabi. Mark Punjabi you wrote yourself with `// pa: needs expert review`.
-- New content stays `sample: true` (guides: `draft` or `in-review`) until he says his advisor has approved it. Do not decide this yourself.
+- New items stay `sample: true` until he says his advisor has approved them. Do not decide this yourself.
 - Before any change goes live: `npm run lint && npm run typecheck && npm run build` must pass, and the changed pages must be checked at phone width (about 360px) in both `/pa/...` and `/en/...`. If you cannot open a browser, say so plainly and ask him to check the preview link on his phone. Never claim a check you did not do.
 
 ## How a change reaches scioart.co.in
@@ -28,38 +29,38 @@ Hosting is Vercel (project `scioart-1`, connected to GitHub `sunnyrudhsingh/scio
 
 ## Non-negotiable rules
 
-1. **Never invent agricultural recommendations.** No doses, varieties, dates, chemical names, quantities or yields from memory or the web. They come only from the official PAU Package of Practices text or a PAU expert, supplied by Sunnyrudh. If something is missing, leave "—" / "to be added" and ask.
+1. **Materials, not advice, and never invented facts.** The site shares items; it does not advise. Any farm fact inside an item (doses, varieties, dates, chemical names, yields) comes only from PAU research or a PAU expert, supplied by Sunnyrudh. If something is missing, leave "To be added" and ask.
 2. **Both languages, always.** Every visible string is bilingual: content uses `l("English", "ਪੰਜਾਬੀ")`; interface text lives in `messages/en.json` and `messages/pa.json` with identical keys. Unicode Gurmukhi only. Mark Punjabi you drafted yourself with `// pa: needs expert review`.
-3. **Samples stay marked** with `sample: true` until the reviewer approves. Guides use `status`: `draft` and `in-review` are hidden from the site; `published` and `archived` are shown.
+3. **Samples stay marked** with `sample: true` until the reviewer approves.
 4. **Never change a slug** of a live page (slugs are URLs).
 5. Keep it fast and accessible: no heavy libraries, keyboard and screen-reader friendly, touch targets at least 44px, respect reduced motion.
 
-## Current state (v1.0.0, October 2026)
+## Current state (v2.0.0, November 2026)
 
-- Full site built: 36 crops, 10 core operations each (allied occupations have their own), editions 2023–2026 with archive, 11 topics, crop calendar with .ics export, Learn & Play (10 sample items), 3 sample wheat extension kits with ZIP download, advisories with urgent banner, resources and glossary, bilingual search, Ask an Expert, audience pages, district picker, dark mode, offline support, sitemap, hreflang, share images.
-- **All agricultural content is SAMPLE.** Only wheat has (sample) operation guides, in `content/guides/wheat.ts`; it is the template for every other crop.
-- Not yet done (owner's to-do list):
-  - Connect scioart.co.in to Vercel (GoDaddy DNS); set env vars when needed (see `.env.example`). The site is already deployed at scioart-1.vercel.app.
-  - Run `supabase/schema.sql` for Ask an Expert (otherwise demo mode, nothing stored)
-  - Real Package of Practices text, crop by crop, reviewed and published
-  - Real kit PDFs, audio and game files in place of `public/samples/`
-  - Photos per IMAGES.md (crop photos are picked up automatically)
-  - Replace `SAMPLE_VIDEO_ID` in `content/learn.ts`; replace placeholder contact email in `lib/site.ts`
-  - Expert review of Punjabi lines marked `// pa: needs expert review`
-  - Search page: a rare React hydration error (#418) seen about 2 times in 60 production page loads at phone width, after visiting other pages first; the page recovers by itself and could not be reproduced with `next dev`. Not yet investigated further.
-  - Mobile Lighthouse performance on the home page measured ~70–80 in a lab (target 85); accessibility, best practices and SEO measured 95–100. Re-measure with PageSpeed Insights after deploy.
+- The site is a library: 12 sections (`content/taxonomy.ts` → `categories`), each with its own page at `/<section-id>`, and one page per item at `/<section-id>/<slug>`. All items live in `content/materials.ts`. `/library` shows every section and every item with filters (section, crop, theme, language). The Live section works out "coming up / live now / past" on the visitor's clock (`components/content/LiveBoard.tsx`, `LiveStatus.tsx`, `components/home/NextLive.tsx`).
+- Also: 36 crops and 11 themes as ways to browse, research summaries, a bilingual glossary, bilingual search, dark mode, offline support, sitemap, hreflang and share images.
+- Old v1 web addresses (`/learn/...`, `/calendar`, `/ask`, `/advisories/...`, `/extension/...`, `/for/...`, `/crops/<crop>/<chapter>...`, `/resources/editions`, `/resources/leaflets`) redirect permanently to the nearest new page (`next.config.ts` → `redirects`).
+- **All 17 library items are SAMPLES** (silent audio and one-page PDFs in `public/samples/`, `SAMPLE_VIDEO_ID` for videos). Real files go in `public/media/<section-id>/`.
+- Owner's to-do list:
+  - Real items for each section, reviewed, then `sample: false`; delete the sample items as real ones arrive
+  - Real date, time and YouTube/Facebook link for the sample live program, or remove it
+  - Cover pictures for items (`media.cover`) and crop photos per IMAGES.md
+  - Replace the placeholder contact email in `lib/site.ts`
+  - Expert review of Punjabi lines marked `// pa: needs expert review`, and of `messages/pa.json` (drafted by an assistant in November 2026)
+  - Mobile Lighthouse performance on the home page measured ~70–80 in a lab in v1 (target 85). Re-measure with PageSpeed Insights.
 
 ## How the code is organised
 
 - `content/*.ts`: all content as typed data, validated with zod in `lib/content.ts` (which also checks every cross-reference and fails the build on problems). Pages read data only through `lib/content.ts`.
-- New crop guides: create `content/guides/<crop>.ts` (copy `wheat.ts`) and register it in `lib/content.ts` next to `wheatGuides`.
+- Library items: `content/materials.ts`. A new section needs its id in `CategoryId` (`content/schema.ts`), an entry in `categories` (`content/taxonomy.ts`) and an icon in `components/content/categoryIcons.tsx`.
 - `app/[locale]/…`: pages. `components/`: illustrations (original SVG art), layout, motion, ui, content, home.
 - `messages/`: interface strings; `messages/index.ts` chooses which namespaces reach client components.
-- `public/samples/`: placeholder downloads made by `npm run samples`.
+- `public/media/<section-id>/`: real audio, PDFs and covers. `public/samples/`: placeholder files made by `npm run samples`.
 
 ## Technical notes (this is Next.js 16, not what older docs describe)
 
 - Next.js 16 with Turbopack, React 19.3, TypeScript, Tailwind CSS v4 (CSS-first tokens in `app/globals.css`, dark mode via `[data-theme=dark]`, season colours via `data-season`).
+- Colours: the owner chose the **Phulkari** palette (maroon, gold, magenta) in November 2026. `PALETTE` in `lib/site.ts` sets `data-palette` on `<html>`; the palettes (`phulkari`, `truck`, `sarson`, each with a dark version) are in `app/globals.css`. Each kind of item has one colour (`--cat-watch`, `--cat-listen`, `--cat-play`, `--cat-learn`, `--cat-read`, `--cat-live`); use `categoryTint`/`categorySolid` from `components/content/categoryIcons.tsx`, not new hard-coded colours. The phulkari pattern is `components/illustrations/Phulkari.tsx`. Browser theme colour, app icons and the share image use the Phulkari colours directly; update them too if the palette ever changes.
 - next-intl 4: routes are `/pa/...` and `/en/...`; routing in `i18n/`; middleware is `proxy.ts` (Next 16 renamed middleware). Cast locales `as Locale` where needed.
 - Pages are statically generated (`generateStaticParams`, `dynamicParams = false`). After adding routes, run `npx next typegen` before `tsc`.
 - Page transitions: React `<ViewTransition>`; scroll reveals: CSS scroll-driven animations (`[data-reveal]`); hero motion starts after load (`components/motion/HeroParallax.tsx`). No Framer/Motion library.

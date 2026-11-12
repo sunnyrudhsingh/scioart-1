@@ -32,17 +32,45 @@ export const categoryIcon: Record<CategoryId, LucideIcon> = {
 
 /**
  * Colour follows what you do with an item, so the library reads at a glance:
- * blue = watch, green = listen, gold = play, violet = learn, clay = read, red = live.
+ * one colour each for watch, listen, play, learn and read, and red for live.
+ * The colours themselves come from the palette in app/globals.css (--cat-*).
  */
-const actionTint: Record<Category["action"], string> = {
-  watch: "bg-[#e1eef6] text-[#1d5878] dark:bg-[#132634] dark:text-[#9cc9e3]",
-  listen: "bg-[#e2f0e5] text-[#236b3d] dark:bg-[#183022] dark:text-[#8fd4a6]",
-  play: "bg-[#fbefd0] text-[#7a5200] dark:bg-[#33290f] dark:text-[#f2c860]",
-  learn: "bg-[#ece6f6] text-[#4c3a7a] dark:bg-[#231d33] dark:text-[#c3b3ec]",
-  read: "bg-[#f6e4da] text-[#8a3b17] dark:bg-[#33201a] dark:text-[#eda88a]",
-};
-const liveTint = "bg-[#fbe3de] text-[#a12a1a] dark:bg-[#361a15] dark:text-[#f29a8a]";
+type Key = Category["action"] | "live";
+const keyOf = (c: Pick<Category, "id" | "action">): Key => (c.id === "live" ? "live" : c.action);
 
-export function categoryTint(c: Pick<Category, "id" | "action">) {
-  return c.id === "live" ? liveTint : actionTint[c.action];
-}
+/** Soft background with text in the category colour (cards, badges). */
+const soft: Record<Key, string> = {
+  watch:
+    "bg-[color-mix(in_oklab,var(--cat-watch)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-watch)_82%,var(--text))]",
+  listen:
+    "bg-[color-mix(in_oklab,var(--cat-listen)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-listen)_82%,var(--text))]",
+  play: "bg-[color-mix(in_oklab,var(--cat-play)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-play)_72%,var(--text))]",
+  learn:
+    "bg-[color-mix(in_oklab,var(--cat-learn)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-learn)_82%,var(--text))]",
+  read: "bg-[color-mix(in_oklab,var(--cat-read)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-read)_82%,var(--text))]",
+  live: "bg-[color-mix(in_oklab,var(--cat-live)_var(--cat-mix-soft),var(--surface))] text-[color-mix(in_oklab,var(--cat-live)_82%,var(--text))]",
+};
+
+/** Solid category colour with white text (big section buttons). */
+const solid: Record<Key, string> = {
+  watch: "bg-cat-watch text-white",
+  listen: "bg-cat-listen text-white",
+  play: "bg-cat-play text-white",
+  learn: "bg-cat-learn text-white",
+  read: "bg-cat-read text-white",
+  live: "bg-cat-live text-white",
+};
+
+/** The category colour as a CSS value, for borders and patterns. */
+const cssVar: Record<Key, string> = {
+  watch: "var(--cat-watch)",
+  listen: "var(--cat-listen)",
+  play: "var(--cat-play)",
+  learn: "var(--cat-learn)",
+  read: "var(--cat-read)",
+  live: "var(--cat-live)",
+};
+
+export const categoryTint = (c: Pick<Category, "id" | "action">) => soft[keyOf(c)];
+export const categorySolid = (c: Pick<Category, "id" | "action">) => solid[keyOf(c)];
+export const categoryColor = (c: Pick<Category, "id" | "action">) => cssVar[keyOf(c)];

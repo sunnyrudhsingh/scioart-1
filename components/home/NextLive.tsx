@@ -29,13 +29,14 @@ export function NextLive({ items, builtAt }: { items: Item[]; builtAt: number })
   const label = onAir ? t("onAirBadge") : next ? t("nextLive") : t("latestRecording");
 
   return (
-    <div className="flex flex-col gap-4 rounded-[var(--radius-section)] bg-ink p-6 text-paper sm:flex-row sm:items-center sm:p-8 dark:bg-surface-2 dark:text-text">
+    <div className="relative flex flex-col gap-4 overflow-hidden rounded-[var(--radius-section)] bg-field p-6 text-paper sm:flex-row sm:items-center sm:p-8">
+      <span aria-hidden="true" className="absolute inset-y-0 start-0 w-2" style={{ background: "var(--mustard)" }} />
       <span className="flex items-center gap-3">
         <span
           className={
             onAir
               ? "glow grid size-12 shrink-0 place-items-center rounded-full bg-[#d6402b] text-white"
-              : "grid size-12 shrink-0 place-items-center rounded-full bg-white/10 text-mustard dark:bg-surface"
+              : "grid size-12 shrink-0 place-items-center rounded-full bg-white/10 text-mustard"
           }
         >
           <Radio className="size-6" aria-hidden="true" />

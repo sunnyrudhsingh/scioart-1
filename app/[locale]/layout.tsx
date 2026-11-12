@@ -13,7 +13,7 @@ import { themeScript } from "@/components/layout/ThemeToggle";
 import { PwaProvider } from "@/components/layout/PwaProvider";
 import { getCategories } from "@/lib/content";
 import { tx } from "@/lib/text";
-import { SITE_URL } from "@/lib/site";
+import { PALETTE, SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -60,7 +60,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const sections = getCategories().map((c) => ({ href: `/${c.id}`, label: tx(c.name, locale) }));
 
   return (
-    <html lang={locale} className={fontVariables} suppressHydrationWarning>
+    <html lang={locale} className={fontVariables} data-palette={PALETTE} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

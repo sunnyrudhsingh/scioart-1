@@ -9,7 +9,7 @@ import { PageHeader } from "@/components/ui/Section";
 import { MaterialCard } from "@/components/content/MaterialCard";
 import { LibraryBrowser } from "@/components/content/LibraryBrowser";
 import { LiveBoard } from "@/components/content/LiveBoard";
-import { categoryIcon, categoryTint } from "@/components/content/categoryIcons";
+import { categoryIcon, categorySolid } from "@/components/content/categoryIcons";
 import { getCategories, getCategory, getCrops, getMaterials, getTopics, isCategoryId } from "@/lib/content";
 import { BUILT_AT } from "@/lib/build";
 import { buildMetadata } from "@/lib/metadata";
@@ -57,7 +57,7 @@ export default async function CategoryPage({ params }: PageProps<"/[locale]/[cat
           title={tx(category.name, locale)}
           lead={tx(category.short, locale)}
           eyebrow={
-            <span className={cn("mb-4 inline-grid size-14 place-items-center rounded-2xl", categoryTint(category))}>
+            <span className={cn("shadow-soft mb-4 inline-grid size-14 place-items-center rounded-2xl", categorySolid(category))}>
               <Icon className="size-7" aria-hidden="true" />
             </span>
           }

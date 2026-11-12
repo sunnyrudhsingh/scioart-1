@@ -6,6 +6,7 @@ import { getCategory, materialHref } from "@/lib/content";
 import { isRealYouTubeId, youTubeThumb } from "@/lib/media";
 import { formatDateTime, tx } from "@/lib/text";
 import { categoryIcon, categoryTint } from "./categoryIcons";
+import { PhulkariTexture } from "@/components/illustrations/Phulkari";
 import { cn } from "@/lib/cn";
 
 /** A library item as a card: a picture panel (cover, video still, or the category's icon) over its title. */
@@ -46,11 +47,14 @@ export async function MaterialCard({
             className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
-          <Icon
-            aria-hidden="true"
-            strokeWidth={1.25}
-            className={cn("transition-transform duration-700 group-hover:-rotate-6", large ? "size-28" : "size-16")}
-          />
+          <>
+            <PhulkariTexture className="opacity-[0.07]" />
+            <Icon
+              aria-hidden="true"
+              strokeWidth={1.25}
+              className={cn("relative transition-transform duration-700 group-hover:-rotate-6", large ? "size-28" : "size-16")}
+            />
+          </>
         )}
         <span className="absolute start-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-surface/90 px-2.5 py-1 text-sm font-semibold text-text backdrop-blur">
           <Icon className="size-4" aria-hidden="true" />

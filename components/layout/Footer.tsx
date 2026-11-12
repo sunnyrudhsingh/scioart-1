@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { BadgeCheck } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "@/components/illustrations/Logo";
-import { SoilLayers } from "@/components/illustrations/Decor";
+import { PhulkariBand } from "@/components/illustrations/Phulkari";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { CONTACT_EMAIL } from "@/lib/site";
 
@@ -43,7 +43,7 @@ export async function Footer() {
 
   return (
     <footer data-site-footer className="relative mt-24 bg-surface-2 pb-[calc(var(--bottom-nav-h)+env(safe-area-inset-bottom))] lg:pb-0">
-      <SoilLayers className="absolute inset-x-0 -top-10 h-10 w-full" />
+      <PhulkariBand className="h-5" size={20} />
       <div className="container-x grid gap-10 py-14 md:grid-cols-[1.3fr_2fr]">
         <div>
           <Logo />

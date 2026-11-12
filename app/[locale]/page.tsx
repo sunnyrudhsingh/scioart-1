@@ -7,6 +7,7 @@ import { HeroLandscape } from "@/components/illustrations/HeroLandscape";
 import { CropIcon } from "@/components/illustrations/CropIcon";
 import { TopicIcon } from "@/components/illustrations/FieldIcons";
 import { WheatStalkLine } from "@/components/illustrations/Decor";
+import { PhulkariBand, PhulkariTexture } from "@/components/illustrations/Phulkari";
 import { HeroParallax } from "@/components/motion/HeroParallax";
 import { WordReveal } from "@/components/motion/WordReveal";
 import { Counter } from "@/components/motion/Counter";
@@ -147,7 +148,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       {/* ── The library's sections ──────────────────────────────────── */}
-      <div className="bg-[var(--hl-front-bottom)] pt-2 pb-1" />
+      <PhulkariBand />
       <Section labelledBy="sections-title" className="pt-12">
         <div className="container-x">
           <SectionHeader id="sections-title" title={t("sectionsTitle")} lead={t("sectionsLead")} />
@@ -409,6 +410,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* ── Share band ──────────────────────────────────────────────── */}
       <section aria-labelledby="share-title" className="container-x">
         <div className="relative overflow-hidden rounded-[var(--radius-section)] bg-field px-6 py-12 text-paper sm:px-12 sm:py-16">
+          <PhulkariTexture className="opacity-[0.12]" />
           <Share2 className="absolute -end-10 -bottom-10 size-72 text-white/10" aria-hidden="true" />
           <h2 id="share-title" className="t-h2 relative max-w-xl">
             {t("shareTitle")}

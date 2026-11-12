@@ -111,6 +111,160 @@
   color-scheme: dark;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Library colours. Each kind of item has one bold colour (--cat-*), used
+   solid for buttons and softened (mixed into the surface) behind cards,
+   so it works in light and dark mode. --ph-* are the phulkari pattern
+   colours. A palette (data-palette on <html>) sets them all at once.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --cat-watch: #1d5878;
+  --cat-listen: #2b7a46;
+  --cat-play: #b07a00;
+  --cat-learn: #5b45a0;
+  --cat-read: #a3481c;
+  --cat-live: #c0392b;
+  --ph-cloth: #7b1530;
+  --ph-1: #f2b632;
+  --ph-2: #e8710a;
+  --ph-3: #d81b60;
+  --ph-4: #fff3d6;
+}
+
+/* Option A: Phulkari. Maroon cloth, gold and magenta silk. Festive and warm. */
+:root[data-palette="phulkari"] {
+  --paper: #fff8ef;
+  --bg: #fff8ef;
+  --surface: #fffdf9;
+  --surface-2: #f8eadb;
+  --surface-3: #f1dcc6;
+  --field-green: #6d1131;
+  --mustard: #f5a623;
+  --primary: #a3124f;
+  --primary-hover: #870e41;
+  --link: #a3124f;
+  --accent: #a3124f;
+  --accent-ink: #8a0f43;
+  --accent-soft: #fbe2ec;
+  --cat-watch: #c2185b;
+  --cat-listen: #d9620a;
+  --cat-play: #b8860b;
+  --cat-learn: #00796b;
+  --cat-read: #3949ab;
+  --cat-live: #c62828;
+  --ph-cloth: #7b1530;
+  --ph-1: #f2b632;
+  --ph-2: #e8710a;
+  --ph-3: #e9407a;
+  --ph-4: #fff3d6;
+}
+:root[data-palette="phulkari"][data-theme="dark"] {
+  --bg: #1a0d12;
+  --surface: #241218;
+  --surface-2: #2e1820;
+  --surface-3: #3a1f29;
+  --primary: #f27aa6;
+  --primary-hover: #f79cbd;
+  --on-primary: #1a0d12;
+  --link: #f79cbd;
+  --accent: #f27aa6;
+  --accent-ink: #f79cbd;
+  --accent-soft: #3a1a26;
+  --field-green: #4a0c22;
+}
+
+/* Option B: Truck art. Navy, turquoise, hot pink and sunshine yellow. Bold and playful. */
+:root[data-palette="truck"] {
+  --paper: #f8fbfb;
+  --bg: #f8fbfb;
+  --surface: #ffffff;
+  --surface-2: #e9f3f3;
+  --surface-3: #d9eaea;
+  --field-green: #14215c;
+  --mustard: #ffcc00;
+  --primary: #0b6e75;
+  --primary-hover: #08585e;
+  --link: #0b6e75;
+  --accent: #0b6e75;
+  --accent-ink: #075a60;
+  --accent-soft: #d8f0f0;
+  --cat-watch: #d81b60;
+  --cat-listen: #00838f;
+  --cat-play: #c79400;
+  --cat-learn: #2e8b2e;
+  --cat-read: #e8590c;
+  --cat-live: #e53935;
+  --ph-cloth: #14215c;
+  --ph-1: #ffcc00;
+  --ph-2: #e91e63;
+  --ph-3: #00b3b8;
+  --ph-4: #ffffff;
+}
+:root[data-palette="truck"][data-theme="dark"] {
+  --bg: #0b1030;
+  --surface: #121940;
+  --surface-2: #19214e;
+  --surface-3: #212b5e;
+  --primary: #4fd1d6;
+  --primary-hover: #7fe0e3;
+  --on-primary: #0b1030;
+  --link: #7fe0e3;
+  --accent: #4fd1d6;
+  --accent-ink: #7fe0e3;
+  --accent-soft: #15304a;
+  --field-green: #0a1240;
+}
+
+/* Option C: Sarson and indigo. Mustard-flower yellow on deep indigo. Calm and modern. */
+:root[data-palette="sarson"] {
+  --paper: #fbfaf5;
+  --bg: #fbfaf5;
+  --surface: #ffffff;
+  --surface-2: #f0eee4;
+  --surface-3: #e6e3d6;
+  --field-green: #1e1b4b;
+  --mustard: #f4c430;
+  --primary: #3730a3;
+  --primary-hover: #2c2685;
+  --link: #3730a3;
+  --accent: #3730a3;
+  --accent-ink: #312e81;
+  --accent-soft: #e5e4fb;
+  --cat-watch: #3b5bdb;
+  --cat-listen: #2f9e44;
+  --cat-play: #d08c00;
+  --cat-learn: #7048e8;
+  --cat-read: #e8590c;
+  --cat-live: #e03131;
+  --ph-cloth: #1e1b4b;
+  --ph-1: #f4c430;
+  --ph-2: #40c057;
+  --ph-3: #ffffff;
+  --ph-4: #748ffc;
+}
+:root[data-palette="sarson"][data-theme="dark"] {
+  --bg: #0f0e24;
+  --surface: #17153a;
+  --surface-2: #1e1c47;
+  --surface-3: #262357;
+  --primary: #a5a2f7;
+  --primary-hover: #c1bffa;
+  --on-primary: #0f0e24;
+  --link: #c1bffa;
+  --accent: #a5a2f7;
+  --accent-ink: #c1bffa;
+  --accent-soft: #23214f;
+  --field-green: #13113a;
+}
+
+/* Soft and text versions of the library colours, mixed so they suit light and dark. */
+:root {
+  --cat-mix-soft: 14%;
+}
+[data-theme="dark"] {
+  --cat-mix-soft: 24%;
+}
+
 /* Season accents */
 [data-season="rabi"] {
   --accent: var(--wheat-gold);
@@ -198,6 +352,12 @@
   --color-sky: var(--sky);
   --color-paper: var(--paper);
   --color-ink: var(--ink);
+  --color-cat-watch: var(--cat-watch);
+  --color-cat-listen: var(--cat-listen);
+  --color-cat-play: var(--cat-play);
+  --color-cat-learn: var(--cat-learn);
+  --color-cat-read: var(--cat-read);
+  --color-cat-live: var(--cat-live);
 
   --font-body: var(--font-body-stack);
   --font-display: var(--font-display-stack);
